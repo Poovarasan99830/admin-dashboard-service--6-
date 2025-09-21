@@ -5,6 +5,8 @@ from src.common.database import init_engine
 from src.squads.e3_2_marketplace.routes import router as marketplace_router
 from src.common.logger import setup_logging
 
+from src.squads.e3_4_payments.routes import router as payments_router
+
 setup_logging()
 
 app = FastAPI(title="Admin Dashboard - Marketplace Oversight (E3.2)")
@@ -14,7 +16,8 @@ init_engine(settings.DATABASE_URL)
 
 # include routers
 app.include_router(marketplace_router, prefix="/api/v1/admin/marketplace", tags=["marketplace"])
+app.include_router(payments_router)
 
 @app.get("/")
 def health():
-    return {"status": "ok", "service": "admin-dashboard-service", "squad": "E3.2"}
+    return {"status": "ok", "service": "admin-dashboard-service", "squad": "E3.2,3.4"}

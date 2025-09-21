@@ -15,7 +15,7 @@ def init_engine(db_url: str):
 def get_engine():
     return _engine
 
-def get_session() -> Generator:
+def get_db() -> Generator:
     """Yield a DB session (use in dependencies)."""
     global _SessionLocal
     if _SessionLocal is None:
