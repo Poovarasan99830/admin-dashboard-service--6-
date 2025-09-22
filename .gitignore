@@ -1,0 +1,48 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+env/
+envi/
+.venv/
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Local database files (SQLite etc.)
+*.db
+
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+
+# Alembic
+migrations/versions/*.pyc
+migrations/versions/__pycache__/
+
+# Logs
+*.log
+logs/
+
+# Coverage/testing
+.coverage
+htmlcov/
+.tox/
+pytest_cache/
+
+# Docker
+*.pid
+*.seed
+docker-compose.override.yml
