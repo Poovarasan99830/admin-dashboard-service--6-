@@ -46,3 +46,6 @@ pytest_cache/
 *.pid
 *.seed
 docker-compose.override.yml
+
+dev_admin_dashboard.db
+*.sqlite3
