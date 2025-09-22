@@ -1,27 +1,22 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.orm import sessionmaker, declarative_base, Session
 from typing import Generator
+from src.config.settings import settings
 
+engine = None
+SessionLocal = None
 Base = declarative_base()
-_engine = None
-_SessionLocal = None
 
-def init_engine(db_url: str):
-    global _engine, _SessionLocal
-    _engine = create_engine(db_url, future=True)
-    _SessionLocal = sessionmaker(bind=_engine, autocommit=False, autoflush=False)
-    return _engine
+def init_engine(database_url: str):
+    global engine, SessionLocal
+    engine = create_engine(database_url, connect_args={"check_same_thread": False} if database_url.startswith("sqlite") else {})
+    SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-def get_engine():
-    return _engine
-
-def get_session() -> Generator:
-    """Yield a DB session (use in dependencies)."""
-    global _SessionLocal
-    if _SessionLocal is None:
-        raise RuntimeError("Engine not initialized, call init_engine() first")
-    session = _SessionLocal()
+def get_session() -> Generator[Session, None, None]:
+    if SessionLocal is None:
+        init_engine(settings.DATABASE_URL)
+    db = SessionLocal()
     try:
-        yield session
+        yield db
     finally:
-        session.close()
+        db.close()

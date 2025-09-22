@@ -1,9 +1,8 @@
 from pydantic import BaseSettings
 
 class Settings(BaseSettings):
-    DATABASE_URL: str
-    ADMIN_API_KEY: str = "changeme"
-    SERVICE_NAME: str = "admin-dashboard-service"
+    DATABASE_URL: str = "sqlite:///./dev_admin_dashboard.db"
+    ENV: str = "development"
 
     class Config:
         env_file = ".env"

@@ -1,13 +1,16 @@
-from fastapi import Header, HTTPException, Depends
+from fastapi import Header, Depends
+from src.common.exceptions import Forbidden, Unauthorized
 from typing import Optional
-from src.config.settings import settings
 
-def verify_admin(x_api_key: Optional[str] = Header(None)):
+def verify_admin(x_admin_role: Optional[str] = Header(None), x_admin_id: Optional[str] = Header(None)):
     """
-    Very simple RBAC check for demo:
-    - checks a static ADMIN_API_KEY header.
-    Replace with real auth & permission checks.
+    Simple RBAC dependency for dev:
+    - expects header `x-admin-role: admin` and `x-admin-id: <id>`
+    In production this would validate JWT and check claims/permissions.
     """
-    if x_api_key != settings.ADMIN_API_KEY:
-        raise HTTPException(status_code=403, detail="Forbidden: admin credentials required")
-    return True
+    if x_admin_id is None:
+        raise Unauthorized("Missing admin id")
+    if x_admin_role != "admin":
+        raise Forbidden("Admin role required")
+    # return admin identity for logging
+    return {"admin_id": int(x_admin_id)}
