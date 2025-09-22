@@ -1,11 +1,30 @@
-# Ignore virtual environments
-envi/
-venv/
-
+# Python cache
 __pycache__/
-
-
-
 *.pyc
 *.pyo
 *.pyd
+
+# Virtual environment folders
+env/
+venv/
+ENV/
+.venv/
+
+# Distribution / packaging
+*.egg-info/
+dist/
+build/
+
+# Logs
+*.log
+
+# IDE / editor settings
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+*.env
