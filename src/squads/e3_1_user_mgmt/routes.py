@@ -20,6 +20,9 @@ def get_users(
     users, meta = service.list_users(db, name=name, email=email, status=status, page=page, limit=limit)
     return {"users": users, "meta": meta}
 
+
+
+
 @router.post("/{user_id}/suspend", response_model=schema.ActionResponse)
 def suspend_user(
     user_id: int = Path(..., ge=1),
@@ -30,6 +33,11 @@ def suspend_user(
     admin_id = admin["admin_id"]
     user = service.suspend_user(db, user_id=user_id, admin_id=admin_id, reason=payload.reason)
     return {"message": "User suspended successfully", "user": user}
+
+
+
+
+
 
 @router.post("/{user_id}/restore", response_model=schema.ActionResponse)
 def restore_user(
